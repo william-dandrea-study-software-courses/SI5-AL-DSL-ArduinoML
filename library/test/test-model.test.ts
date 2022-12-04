@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+
 import * as mocha from 'mocha';
 import * as chai from 'chai';
 import {Action, Actuator, Application, Sensor, Signal, State, Transition} from "../src";
@@ -21,7 +23,12 @@ describe('Model Library', () => {
 
         const app = new Application("Switch!", [button, led], [off, on])
 
-        console.log(app.export())
+        fs.writeFile('output.ino', app.export(), (err) => {
+            if (err) {
+                throw new Error(err.message);
+            }
+        })
+
     });
 
 });
