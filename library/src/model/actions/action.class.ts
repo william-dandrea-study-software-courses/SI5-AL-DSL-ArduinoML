@@ -1,5 +1,5 @@
-import {Signal} from "./util";
-import {Brick} from "./bricks";
+import {Signal} from "../util";
+import {Brick} from "../bricks";
 
 
 /**
@@ -7,23 +7,15 @@ import {Brick} from "./bricks";
  */
 export class Action {
 
-    private readonly _value: Signal;
     private readonly _brick: Brick;
 
-
     /**
-     * @param {Signal} value: the signal to send
      * @param {Brick} brick: the brick concerned by the action
      */
-    public constructor(value: Signal, brick: Brick) {
-        this._value = value;
+    public constructor(brick: Brick) {
         this._brick = brick;
     }
 
-
-    get value(): Signal {
-        return this._value;
-    }
 
     get brick(): Brick {
         return this._brick;

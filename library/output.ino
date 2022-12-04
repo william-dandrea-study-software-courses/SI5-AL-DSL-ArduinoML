@@ -5,7 +5,6 @@ void setup() {
 	pinMode(BUTTON, INPUT);
 	pinMode(LED, OUTPUT);
 }
-int state = LOW; int prev = HIGH;
 long time = 0; long debounce = 200;
 void state_off() {
 	digitalWrite(LED, LOW);

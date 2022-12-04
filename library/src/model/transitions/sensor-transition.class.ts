@@ -1,15 +1,9 @@
-import {Sensor} from "./bricks";
-import {Signal} from "./util";
-import {State} from "./state.class";
+import {Sensor, Signal, State, Transition} from "../index";
 
-/**
- * A transition between two states.
- */
-export class Transition {
 
+export class SensorTransition extends Transition {
     private readonly _sensor: Sensor;
     private readonly _value: Signal;
-    private readonly _nextState: State;
 
     /**
      * @param {Sensor} sensor: sensor which value is checked to trigger the transition
@@ -17,9 +11,9 @@ export class Transition {
      * @param {State} nextState: state to change to when the transition is triggered
      */
     constructor(sensor: Sensor, value: Signal, nextState: State) {
+        super(nextState);
         this._sensor = sensor;
         this._value = value;
-        this._nextState = nextState;
     }
 
 
@@ -29,9 +23,5 @@ export class Transition {
 
     get value(): Signal {
         return this._value;
-    }
-
-    get nextState(): State {
-        return this._nextState;
     }
 }

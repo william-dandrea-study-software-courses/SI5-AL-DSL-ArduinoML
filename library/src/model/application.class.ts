@@ -1,6 +1,6 @@
 import {NamedElement} from "./util";
 import {Brick} from "./bricks";
-import {State} from "./state.class";
+import {State} from "./states/state.class";
 
 /**
  * Application built over bricks.
@@ -34,7 +34,6 @@ export class Application extends NamedElement {
         result += (`void setup() {` + `\n`);
         this._bricks.forEach(brick => { result += (`${brick.setup()}` + `\n`); })
         result += (`}` + `\n`);
-        result += (`int state = LOW; int prev = HIGH;` + `\n`);
         result += (`long time = 0; long debounce = 200;` + `\n`);
         this._states.forEach(state => {result += (`${state.setup()}` + `\n`);})
         result += (`void loop() { state_${this._states[0].name}(); }`);
