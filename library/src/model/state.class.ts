@@ -1,5 +1,6 @@
-import {NamedElement} from "./NamedElement";
-import {SIGNAL} from "./SIGNAL";
+import {NamedElement} from "./util";
+import {Action} from "./action.class";
+import {Transition} from "./transition.class";
 
 
 /**
@@ -7,25 +8,17 @@ import {SIGNAL} from "./SIGNAL";
  */
 export class State extends NamedElement {
 
+    private readonly _actions: Action[];
+    private _transition: Transition = null;
+
+
     /**
      * @param {string} name
      * @param {Action[]} actions
-     * @param {Transition} transition
      */
-    constructor(name, actions, transition) {
+    constructor(name: string, actions: Action[]) {
         super(name);
-
         this._actions = actions;
-        this._transition = transition;
-    }
-
-
-    /**
-     * Sets the transition of the state
-     * @param {Transition} transition
-     */
-    set transition(transition) {
-        this._transition = transition;
     }
 
 
@@ -33,19 +26,19 @@ export class State extends NamedElement {
      * Arduino code for the state.
      * @return {String}
      */
-    setup = () => {
+    public setup(): string {
         let result = "";
         result += (`void state_${this._name}() {` + `\n`);
         // result += (`` + `\n`);
 
         // generate code for state actions
         this._actions.forEach(action => {
-            result += (`\tdigitalWrite(${action.brick.name}, ${action.value.value});` + `\n`);
+            result += (`\tdigitalWrite(${action.brick.name}, ${action.value});` + `\n`);
             result += (`\tboolean guard =  millis() - time > debounce;` + `\n`);
         })
 
         // generate code for the transition
-        result += (`\tif (digitalRead(${this._transition.sensor.name}) == ${this._transition.value.value} && guard) {` + `\n`);
+        result += (`\tif (digitalRead(${this._transition.sensor.name}) == ${this._transition.value} && guard) {` + `\n`);
         result += (`\t\ttime = millis(); state_${this._transition.nextState.name}();` + `\n`);
         result += (`\t} else {` + `\n`);
         result += (`\t\tstate_${this._name}();` + `\n`);
@@ -55,5 +48,11 @@ export class State extends NamedElement {
         result += (`\n}` + `\n`);
 
         return result;
+    }
+
+
+
+    set transition(value: Transition) {
+        this._transition = value;
     }
 }

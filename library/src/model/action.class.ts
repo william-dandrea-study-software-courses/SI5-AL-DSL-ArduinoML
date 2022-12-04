@@ -1,29 +1,31 @@
+import {Signal} from "./util";
+import {Brick} from "./bricks";
+
+
 /**
  * An action over a brick, sending a signal to it
  */
 export class Action {
 
+    private readonly _value: Signal;
+    private readonly _brick: Brick;
+
+
     /**
-     * @param {SIGNAL} value: the signal to send
+     * @param {Signal} value: the signal to send
      * @param {Brick} brick: the brick concerned by the action
      */
-    constructor(value, brick) {
+    public constructor(value: Signal, brick: Brick) {
         this._value = value;
         this._brick = brick;
     }
 
 
-    /**
-     * @return {SIGNAL}
-     */
-    get value() {
+    get value(): Signal {
         return this._value;
     }
 
-    /**
-     * @return {Brick}
-     */
-    get brick() {
+    get brick(): Brick {
         return this._brick;
     }
 }

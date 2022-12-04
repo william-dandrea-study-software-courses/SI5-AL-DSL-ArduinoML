@@ -1,4 +1,4 @@
-import {Brick} from "./Brick";
+import {Brick} from "./brick.class";
 
 
 export class Sensor extends Brick {
@@ -8,7 +8,7 @@ export class Sensor extends Brick {
      * @param {string} name: name of the sensor
      * @param {number} pin: pin where the sensor is connected
      */
-    constructor(name, pin) {
+    public constructor(name: string, pin: number) {
         super(name, pin);
     }
 
@@ -16,7 +16,12 @@ export class Sensor extends Brick {
      * Arduino code for the setup of the sensor
      * @return {string}
      */
-    setup = () => {
-        return `\tpinMode(${this._name}, INPUT);`
+    public setup(): string {
+        return `\tpinMode(${this._name}, INPUT);`;
+    }
+
+
+    public declare(): string {
+        return super.declare();
     }
 }

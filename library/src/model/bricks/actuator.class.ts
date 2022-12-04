@@ -1,4 +1,4 @@
-import {Brick} from "./Brick";
+import {Brick} from "./brick.class";
 
 
 export class Actuator extends Brick {
@@ -7,7 +7,7 @@ export class Actuator extends Brick {
      * @param {string} name: name of the actuator
      * @param {number} pin: pin where the actuator is connected
      */
-    constructor(name, pin) {
+    public constructor(name: string, pin: number) {
         super(name, pin);
     }
 
@@ -15,7 +15,11 @@ export class Actuator extends Brick {
      * Arduino code for the setup of the actuator
      * @return {string}
      */
-    setup = () => {
-        return `\tpinMode(${this._name}, OUTPUT);`
+    public setup(): string {
+        return `\tpinMode(${this._name}, OUTPUT);`;
+    }
+
+    public declare(): string {
+        return super.declare();
     }
 }
