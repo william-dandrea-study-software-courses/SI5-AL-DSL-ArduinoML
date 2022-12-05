@@ -21,5 +21,4 @@ export class StateTransition extends Transition {
     get currentState(): State {
         return this._currentState;
     }
-
 }

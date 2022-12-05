@@ -1,8 +1,6 @@
 import * as fs from 'fs';
-
-import * as mocha from 'mocha';
 import * as chai from 'chai';
-import {Action, Actuator, Application, Sensor, Signal, State, Transition} from "../src";
+import {Actuator, Application, Sensor, Signal} from "../src";
 import {Buzzer} from "../src/model/bricks/buzzer.class";
 import {SignalAction} from "../src/model/actions/signal-action.class";
 import {SignalState} from "../src/model/states/signal-state.class";
@@ -69,13 +67,41 @@ describe('Model Library', () => {
         })
     });
 
+    /**
+     * Pushing a button activates a LED and a buzzer. Releasing the button switches
+     * the actuators off.
+     */
     it("Very simple alarm", () => {
 
+
+        const button = new Sensor('BUTTON', 9);
+        const led = new Actuator("LED", 12);
+        const buzzer = new Buzzer("buzzer", 13);
+
+        const on = new SignalState("on", [new SignalAction(led, Signal.HIGH), new SignalAction(buzzer, Signal.HIGH)])
+        const off = new SignalState("off", [new SignalAction(led, Signal.LOW), new SignalAction(buzzer, Signal.LOW)])
+
+        const switchOn: SensorTransition = new SensorTransition(button, Signal.HIGH, on);
+        const switchOff: SensorTransition = new SensorTransition(button, Signal.HIGH, off);
+
+        on.transition = switchOff;
+        off.transition = switchOn;
+
+        const app = new Application("Switch!", [button, led, buzzer], [off, on])
+
+        console.log(app.export())
+
+    });
+
+    /**
+     * It will trigger a buzzer if and only if two buttons are pushed at the very same time. Releasing at least one of the button stop the sound.
+     */
+    it("Dual-check alarm", () => {
+
+        const button1 = new Sensor('BUTTON', 9);
+        const button2 = new Sensor('BUTTON', 10);
+
     })
-
-
-
-
 });
 
 /**
