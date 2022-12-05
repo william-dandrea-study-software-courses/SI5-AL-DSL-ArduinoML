@@ -5,27 +5,22 @@ void setup() {
 	pinMode(BUTTON, INPUT);
 	pinMode(LED, OUTPUT);
 }
-long time = 0; long debounce = 200;
 void state_off() {
 	digitalWrite(LED, LOW);
-	boolean guard =  millis() - time > debounce;
-	if (digitalRead(BUTTON) == HIGH && guard) {
-		time = millis(); state_on();
+	if (digitalRead(BUTTON) == HIGH) {
+		state_on();
 	} else {
 		state_off();
 	}
-
 }
 
 void state_on() {
 	digitalWrite(LED, HIGH);
-	boolean guard =  millis() - time > debounce;
-	if (digitalRead(BUTTON) == HIGH && guard) {
-		time = millis(); state_off();
+	if (digitalRead(BUTTON) == HIGH) {
+		state_off();
 	} else {
 		state_on();
 	}
-
 }
 
 void loop() { state_off(); }

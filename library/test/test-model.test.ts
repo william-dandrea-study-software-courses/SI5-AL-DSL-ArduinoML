@@ -43,16 +43,38 @@ describe('Model Library', () => {
     it("Should create a tone melody", () => {
         const buzzer: Buzzer = new Buzzer('BUZZER', 12);
 
-        const play1: MelodyState = new MelodyState("PLAY_SONG_1", [new BuzzerAction(buzzer, 2637, 200), new DelayAction(null, 400)])
-        const play2: MelodyState = new MelodyState("PLAY_SONG_2", [new BuzzerAction(buzzer, 1975, 200), new DelayAction(null, 200)])
+        const frequencies: number[] = [2637, 1975, 2093, 2349, 2093, 1975, 1760, 1760, 2093, 2637, 2349, 2093, 1975, 1975, 2093, 2349, 2637, 2093, 1760, 1760, 1760, 2349, 2794, 3520, 3136, 2794, 2637, 2093, 2637, 2349, 2093, 1975, 1975, 2093, 2349, 2637, 2093, 1760, 1760]
+        const delay: number[] = [400, 200, 200, 400, 200, 200, 400, 200, 200, 400, 200, 200, 400, 200, 200, 400, 400, 400, 400, 800, 400, 200, 200, 400, 200, 200, 600, 200, 400, 200, 200, 400, 200, 200, 400, 400, 400, 400, 800]
 
-        const switchToNext: StateTransition = new StateTransition(play1, play2);
-        play1.transition = switchToNext;
 
-        const app = new Application("Switch!", [buzzer], [play1, play2])
+        const melodies: MelodyState[] = [];
+        let lastMelody: MelodyState = new MelodyState("PLAY_SONG_0", [new BuzzerAction(buzzer, 2637, 200), new DelayAction(null, 400)])
+        melodies.push(lastMelody);
+
+        for (let i = 1; i < frequencies.length - 1; i++) {
+            const currentMelody: MelodyState = new MelodyState(`PLAY_SONG_${i}`, [new BuzzerAction(buzzer, frequencies[i], 200), new DelayAction(null, delay[i])])
+            lastMelody.transition = new StateTransition(lastMelody, currentMelody);
+            melodies.push(currentMelody);
+            lastMelody = currentMelody;
+        }
+
+        const app = new Application("Switch!", [buzzer], melodies)
 
         console.log(app.export())
+
+        fs.writeFile('output_song.ino', app.export(), (err) => {
+            if (err) {
+                throw new Error(err.message);
+            }
+        })
+    });
+
+    it("Very simple alarm", () => {
+
     })
+
+
+
 
 });
 

@@ -29,14 +29,13 @@ export class SignalState extends State {
         // generate code for state actions
         this._signalActions.forEach(action => {
             result += (`\tdigitalWrite(${action.brick.name}, ${action.value});` + `\n`);
-            result += (`\tboolean guard =  millis() - time > debounce;` + `\n`);
         })
 
         // generate code for the transition
 
         if (this._transition instanceof SensorTransition) {
-            result += (`\tif (digitalRead(${this._transition.sensor.name}) == ${this._transition.value} && guard) {` + `\n`);
-            result += (`\t\ttime = millis(); state_${this._transition.nextState.name}();` + `\n`);
+            result += (`\tif (digitalRead(${this._transition.sensor.name}) == ${this._transition.value}) {` + `\n`);
+            result += (`\t\tstate_${this._transition.nextState.name}();` + `\n`);
             result += (`\t} else {` + `\n`);
             result += (`\t\tstate_${this._name}();` + `\n`);
             result += (`\t}` + `\n`);

@@ -28,15 +28,14 @@ export class MelodyState extends State {
             }
 
             if (action instanceof DelayAction) {
-                result += (`\tdelay(${action.duration})` + `\n`);
+                result += (`\tdelay(${action.duration});` + `\n`);
             }
 
         })
 
         if (this._transition != null) {
-            result += (`\tstate_${this._name}();` + `\n`);
+            result += (`\tstate_${this._transition.nextState.name}();` + `\n`);
         }
-
 
         // End of state
         result += (`\n}` + `\n`);
