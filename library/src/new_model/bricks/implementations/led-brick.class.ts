@@ -1,6 +1,6 @@
 import {Brick} from "../brick.class";
 import {OutputBrickInterface} from "../interfaces/output-brick.interface";
-import {Command} from "../../utils/command.class";
+import {Command} from "../../commands/command.class";
 
 
 export class LedBrick extends Brick implements OutputBrickInterface {

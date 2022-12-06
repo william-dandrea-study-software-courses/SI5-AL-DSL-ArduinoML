@@ -1,5 +1,5 @@
 import {Block} from "../blocs/block.class";
-import {Command} from "../utils/command.class";
+import {Command} from "../commands/command.class";
 
 
 export class State {

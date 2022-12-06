@@ -1,5 +1,5 @@
 import {Block} from "./block.class";
-import {Command} from "../utils/command.class";
+import {Command} from "../commands/command.class";
 
 
 export class CommandBlock extends Block {
@@ -15,7 +15,7 @@ export class CommandBlock extends Block {
         let result: string = "";
 
         this._commands.forEach(command => {
-            result += (`${command.value}` + `\n`)
+            result += (`${command.export()}` + `\n`)
         })
 
         return result;

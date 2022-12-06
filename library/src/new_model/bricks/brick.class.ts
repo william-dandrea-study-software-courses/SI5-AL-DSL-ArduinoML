@@ -12,4 +12,9 @@ export abstract class Brick {
 
     abstract declare(): string;
     abstract setup(): string;
+
+
+    get pin(): number {
+        return this._pin;
+    }
 }

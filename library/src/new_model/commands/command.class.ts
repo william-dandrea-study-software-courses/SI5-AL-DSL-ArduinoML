@@ -10,7 +10,7 @@ export class Command {
     }
 
 
-    get value(): string {
+    public export(): string {
         return this._value;
     }
 }

@@ -1,4 +1,4 @@
-import {Command} from "../../utils/command.class";
+import {Command} from "../../commands/command.class";
 
 
 export interface OutputBrickInterface {

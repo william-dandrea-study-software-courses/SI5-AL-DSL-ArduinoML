@@ -1,6 +1,6 @@
 import {Brick} from "./bricks/brick.class";
 import {State} from "./states/state.class";
-import {Command} from "./utils/command.class";
+import {Command} from "./commands/command.class";
 
 
 export class Application {
@@ -14,6 +14,19 @@ export class Application {
         this._bricks = bricks;
         this._states = states;
         this._loopCommands = loopCommands;
+
+        this._checkIfApplicationIsCorrect();
+    }
+
+    private _checkIfApplicationIsCorrect(): void {
+
+        // Verify if we have differents pin for each brick
+        const pinsBricksArray: number[] = this._bricks.map<number>(brick => brick.pin);
+        const pinsBricksSet: Set<number> = new Set<number>(pinsBricksArray);
+        if (pinsBricksSet.size != pinsBricksArray.length) {
+            throw new Error("You cannot plug 2 bricks in the same pin")
+        }
+
     }
 
     public export(): string {
@@ -66,7 +79,7 @@ export class Application {
 
         result += `\nvoid loop() {`
         this._loopCommands.forEach(command => {
-            result += `\n\t${command.value}`;
+            result += `\n\t${command.export()}`;
         });
         result += `\n}`
 

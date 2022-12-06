@@ -1,11 +1,11 @@
 import {Block} from "./block.class";
 import {Condition} from "../utils/condition.class";
-import {Command} from "../utils/command.class";
+import {Command} from "../commands/command.class";
 import {CommandBlock} from "./command-block.class";
 
 export enum Operator {
-    AND = "&",
-    OR = "|",
+    AND = " && ",
+    OR = " || ",
 }
 
 export class ConditionalBlock extends Block {
