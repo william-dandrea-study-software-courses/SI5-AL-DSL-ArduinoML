@@ -25,3 +25,4 @@ export class LedBrick extends Brick implements OutputBrickInterface {
         return `pinMode(${this._name}, OUTPUT);`;
     }
 }
+
