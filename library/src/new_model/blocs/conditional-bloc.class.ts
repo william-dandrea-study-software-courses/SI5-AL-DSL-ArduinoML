@@ -12,19 +12,21 @@ export class ConditionalBlock extends Block {
 
     private readonly _conditions: Condition[];
     private readonly _operator: Operator | null;
-    private readonly _commandBlock: CommandBlock;
+    private readonly _commandBlockIf: CommandBlock;
+    private readonly _commandBlockElse: CommandBlock;
 
-    constructor(conditions: Condition[], operator: Operator | null, commandBlock: CommandBlock) {
+    constructor(conditions: Condition[], operator: Operator | null, commandBlockIf: CommandBlock, commandBlockElse: CommandBlock) {
         super();
         this._conditions = conditions;
         this._operator = operator;
-        this._commandBlock = commandBlock;
+        this._commandBlockIf = commandBlockIf;
+        this._commandBlockElse = commandBlockElse;
     }
 
     export(): string {
         let result: string = "";
 
-        result += `if (`
+        result += `\nif (`
         this._conditions.forEach((condition, index, array) => {
             result += `${condition.value}`;
 
@@ -34,9 +36,15 @@ export class ConditionalBlock extends Block {
         })
         result += `) {\n`
 
-        const blockCommands: string = this._commandBlock.export();
-        result += blockCommands.replace(/^/gm, '\t');   // On ajoute une tabulation à chaque ligne
-        result += `}`;
+        const blockCommandsIf: string = this._commandBlockIf.export();
+        result += blockCommandsIf.replace(/^/gm, '\t');   // On ajoute une tabulation à chaque ligne
+        result += `\n} else {\n`;
+
+        // Else bloc
+        const blockCommandsElse: string = this._commandBlockElse.export();
+        result += blockCommandsElse.replace(/^/gm, '\t');   // On ajoute une tabulation à chaque ligne
+        result += `\n}`;
+
 
         return result;
     }

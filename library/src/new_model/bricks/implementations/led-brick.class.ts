@@ -14,7 +14,7 @@ export class LedBrick extends Brick implements OutputBrickInterface {
     }
 
     toDown(): Command | null {
-        return new Command(`digitalWrite(${this._name}, DOWN);`);
+        return new Command(`digitalWrite(${this._name}, LOW);`);
     }
 
     declare(): string {
@@ -22,6 +22,6 @@ export class LedBrick extends Brick implements OutputBrickInterface {
     }
 
     setup(): string {
-        return `pinMode(${this._name}, OUTPUT)`;
+        return `pinMode(${this._name}, OUTPUT);`;
     }
 }

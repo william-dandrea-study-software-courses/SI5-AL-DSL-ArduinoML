@@ -10,11 +10,11 @@ export class ButtonBrick extends Brick implements InputBrickInterface {
     }
 
     isActive(): Condition {
-        return new Condition(`digitalRead(${this._name} == HIGH)`);
+        return new Condition(`digitalRead(${this._name}) == HIGH`);
     }
 
     isInactive(): Condition {
-        return new Condition(`digitalRead(${this._name} == LOW)`);
+        return new Condition(`digitalRead(${this._name}) == LOW`);
     }
 
     setup(): string {

@@ -34,6 +34,6 @@ export class BuzzerBrick extends Brick implements OutputBrickInterface {
     }
 
     setup(): string {
-        return `pinMode(${this._name}, OUTPUT)`;
+        return `pinMode(${this._name}, OUTPUT);`;
     }
 }

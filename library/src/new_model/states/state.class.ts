@@ -21,7 +21,7 @@ export class State {
     export(): string {
         let result = '';
 
-        result += (`state_${this._name}() {` + `\n`);
+        result += (`void state_${this._name}() {` + `\n`);
 
         this._blocs.forEach(block => {
             result += block.export().replace(/^/gm, '\t');
