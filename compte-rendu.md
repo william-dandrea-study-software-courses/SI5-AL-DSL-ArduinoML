@@ -1,5 +1,14 @@
 
+# Connect Package & frontend
 
+Need to be done for each update of the library
+```shell
+cd ./library
+npm link
+
+cd ../frontend
+npm link typescript-arduinoml
+```
 
 # Tests
 
