@@ -17,4 +17,9 @@ export abstract class Brick {
     get pin(): number {
         return this._pin;
     }
+
+
+    get name(): string {
+        return this._name;
+    }
 }
