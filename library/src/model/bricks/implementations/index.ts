@@ -1,3 +1,3 @@
-export * from './button-brick.class';
-export * from './buzzer-brick.class';
-export * from './led-brick.class';
+export * from "./button.class";
+export * from "./buzzer.class";
+export * from "./led.class";
