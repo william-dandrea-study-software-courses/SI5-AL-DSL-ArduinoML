@@ -30,6 +30,13 @@ export class BinaryExpression extends Condition {
   }
 
   public export(): string {
-    return ``;
+    let result: string = '';
+    for (let i = 0; i < this.children.length; i++) {
+      result += this.children[i].export();
+      if (i != this.children.length - 1) {
+        result += ` ${this._operator} `
+      }
+    }
+    return result;
   }
 }
