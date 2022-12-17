@@ -26,8 +26,8 @@ describe("TEST", () => {
         const state2: State = new State("state2");
 
         const ifElseCodeBlock: IfElseCodeBlock = new IfElseCodeBlock();
-        ifElseCodeBlock.ifCodeBlock = led1.lightOn();
-        ifElseCodeBlock.elseCodeBlock = led1.lightOff();
+        ifElseCodeBlock.addIfCodeBlock(led1.lightOn())
+        ifElseCodeBlock.addElseCodeBlock(led1.lightOff());
         ifElseCodeBlock.addConditions(button1.isPressed());
         ifElseCodeBlock.addConditions(button2.isPressed());
         ifElseCodeBlock.operator = OPERATOR.AND;
@@ -52,16 +52,16 @@ describe("TEST", () => {
         upState.codeBlock.addBlock(buzzer.soundUp());
         const state1IfElseCodeBlock: IfElseCodeBlock = new IfElseCodeBlock();
         state1IfElseCodeBlock.addConditions(button.isPressed());
-        state1IfElseCodeBlock.ifCodeBlock = downState.callState();
-        state1IfElseCodeBlock.elseCodeBlock = upState.callState();
+        state1IfElseCodeBlock.addIfCodeBlock(downState.callState());
+        state1IfElseCodeBlock.addElseCodeBlock(upState.callState());
         upState.codeBlock.addBlock(state1IfElseCodeBlock)
 
         downState.codeBlock.addBlock(led.lightOff());
         downState.codeBlock.addBlock(buzzer.soundDown());
         const state2IfElseCodeBlock: IfElseCodeBlock = new IfElseCodeBlock();
         state2IfElseCodeBlock.addConditions(button.isPressed());
-        state2IfElseCodeBlock.ifCodeBlock = upState.callState();
-        state2IfElseCodeBlock.elseCodeBlock = downState.callState();
+        state2IfElseCodeBlock.addIfCodeBlock(upState.callState());
+        state2IfElseCodeBlock.addElseCodeBlock(downState.callState());
         downState.codeBlock.addBlock(state2IfElseCodeBlock)
 
 
@@ -84,8 +84,8 @@ describe("TEST", () => {
         offState.codeBlock.addBlock(led.lightOff());
         const ifElseBlock: IfElseCodeBlock = new IfElseCodeBlock();
         ifElseBlock.addConditions(button.isPressed());
-        ifElseBlock.ifCodeBlock = onState.callState();
-        ifElseBlock.elseCodeBlock = offState.callState();
+        ifElseBlock.addIfCodeBlock(onState.callState());
+        ifElseBlock.addElseCodeBlock(offState.callState());
         offState.codeBlock.addBlock(ifElseBlock);
 
         const app: Application = new Application([button, led], [onState, offState], offState)
@@ -105,8 +105,8 @@ describe("TEST", () => {
         offState.codeBlock.addBlock(buzzer.soundDown());
         const offStateIfElse: IfElseCodeBlock = new IfElseCodeBlock();
         offStateIfElse.addConditions(button.isPressed());
-        offStateIfElse.ifCodeBlock = noiseOnLedOffState.callState();
-        offStateIfElse.elseCodeBlock = offState.callState();
+        offStateIfElse.addIfCodeBlock(noiseOnLedOffState.callState());
+        offStateIfElse.addElseCodeBlock(offState.callState());
         offState.codeBlock.addBlock(offStateIfElse);
 
 
@@ -114,16 +114,16 @@ describe("TEST", () => {
         noiseOnLedOffState.codeBlock.addBlock(led.lightOff());
         const noiseOnLedOffStateIfElse: IfElseCodeBlock = new IfElseCodeBlock();
         noiseOnLedOffStateIfElse.addConditions(button.isPressed());
-        noiseOnLedOffStateIfElse.ifCodeBlock = noiseOffLedOnState.callState();
-        noiseOnLedOffStateIfElse.elseCodeBlock = noiseOnLedOffState.callState();
+        noiseOnLedOffStateIfElse.addIfCodeBlock(noiseOffLedOnState.callState());
+        noiseOnLedOffStateIfElse.addElseCodeBlock(noiseOnLedOffState.callState());
         noiseOnLedOffState.codeBlock.addBlock(noiseOnLedOffStateIfElse);
 
         noiseOffLedOnState.codeBlock.addBlock(buzzer.soundDown());
         noiseOffLedOnState.codeBlock.addBlock(led.lightOn());
         const noiseOffLedOnStateIfElse: IfElseCodeBlock = new IfElseCodeBlock();
         noiseOffLedOnStateIfElse.addConditions(button.isPressed());
-        noiseOffLedOnStateIfElse.ifCodeBlock = offState.callState();
-        noiseOffLedOnStateIfElse.elseCodeBlock = noiseOnLedOffState.callState();
+        noiseOffLedOnStateIfElse.addIfCodeBlock(offState.callState());
+        noiseOffLedOnStateIfElse.addElseCodeBlock(noiseOnLedOffState.callState());
         noiseOffLedOnState.codeBlock.addBlock(noiseOnLedOffStateIfElse);
 
         const app: Application = new Application([button, led, buzzer], [noiseOnLedOffState, noiseOffLedOnState, offState], offState)
@@ -141,15 +141,15 @@ describe("TEST", () => {
         onState.codeBlock.addBlock(led.lightOn());
         const ifElseBlockOnState: IfElseCodeBlock = new IfElseCodeBlock();
         ifElseBlockOnState.addConditions(button.isPressed());
-        ifElseBlockOnState.ifCodeBlock = offState.callState();
-        ifElseBlockOnState.elseCodeBlock = onState.callState();
+        ifElseBlockOnState.addIfCodeBlock(offState.callState());
+        ifElseBlockOnState.addElseCodeBlock(onState.callState());
         onState.codeBlock.addBlock(ifElseBlockOnState);
 
         offState.codeBlock.addBlock(led.lightOff())
         const ifElseBlockOffState: IfElseCodeBlock = new IfElseCodeBlock();
         ifElseBlockOffState.addConditions(button.isPressed());
-        ifElseBlockOffState.ifCodeBlock = onState.callState();
-        ifElseBlockOffState.elseCodeBlock = offState.callState();
+        ifElseBlockOffState.addIfCodeBlock( onState.callState());
+        ifElseBlockOffState.addElseCodeBlock( offState.callState());
         offState.codeBlock.addBlock(ifElseBlockOffState);
 
         const app: Application = new Application([button, led], [onState, offState], offState)
@@ -159,27 +159,23 @@ describe("TEST", () => {
 
     it ("Dual check alarm", () => {
         const buzzer: Buzzer = new Buzzer("BUZZER", 13, 1000, null);
-        const button1: Button = new Button("BUTTON", 11);
-        const button2: Button = new Button("BUTTON", 12);
+        const button1: Button = new Button("BUTTON1", 11);
+        const button2: Button = new Button("BUTTON2", 12);
 
         const mainState: State = new State("main");
 
         const ifElseCodeBlock: IfElseCodeBlock = new IfElseCodeBlock();
         ifElseCodeBlock.addConditions(button2.isPressed())
         ifElseCodeBlock.addConditions(button1.isPressed())
-
-        const codeBlock1: RegularCodeBlock = new RegularCodeBlock();
-        codeBlock1.addBlock(buzzer.soundUp());
-        codeBlock1.addBlock(mainState.callState());
-        ifElseCodeBlock.ifCodeBlock = codeBlock1;
-
-        const codeBlock2: RegularCodeBlock = new RegularCodeBlock();
-        codeBlock2.addBlock(buzzer.soundDown());
-        codeBlock2.addBlock(mainState.callState());
-        ifElseCodeBlock.elseCodeBlock = codeBlock2
         ifElseCodeBlock.operator = OPERATOR.AND;
-        mainState.codeBlock.addBlock(ifElseCodeBlock);
 
+        ifElseCodeBlock.addIfCodeBlock(buzzer.soundUp());
+        ifElseCodeBlock.addIfCodeBlock(mainState.callState());
+
+        ifElseCodeBlock.addElseCodeBlock(buzzer.soundDown());
+        ifElseCodeBlock.addElseCodeBlock(mainState.callState());
+
+        mainState.codeBlock.addBlock(ifElseCodeBlock)
         const app: Application = new Application([buzzer, button1, button2], [mainState], mainState)
         console.log(app.export())
     })
