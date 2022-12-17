@@ -13,6 +13,10 @@ export class StateModel {
     return `state_${this._name}`;
   }
 
+  public addBlock(block: Block): void {
+    this._block.push(block);
+  }
+
   export(): string {
     let result = "";
 
@@ -21,7 +25,6 @@ export class StateModel {
     this._block.forEach(b => {
       result += b.export().replace(/^/gm, "\t") + `\n`;
     })
-
 
     result += `\n}`;
     return result;

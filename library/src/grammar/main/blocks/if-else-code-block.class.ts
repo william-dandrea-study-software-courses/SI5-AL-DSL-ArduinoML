@@ -7,11 +7,11 @@ import {ConditionBlockDestination, ModelCondition} from "../../../model/block/co
 
 export class IfElseCodeBlock extends CodeBlock {
 
-    private _ifCodeBlock: CodeBlock | null;
-    private _elseCodeBlock: CodeBlock | null;
+    private _ifCodeBlock: CodeBlock | null = null;
+    private _elseCodeBlock: CodeBlock | null = null;
 
     private _conditions: Condition[] = [];
-    private _operator: OPERATOR | null;
+    private _operator: OPERATOR | null = null;
 
     constructor() {
         super();
@@ -33,8 +33,8 @@ export class IfElseCodeBlock extends CodeBlock {
         this._operator = value;
     }
 
-    getContent() {
-        const binaryExpressionCondition: BinaryExpressionCondition = new BinaryExpressionCondition(this._operator)
+    getContent(): ModelCondition  {
+        const binaryExpressionCondition: BinaryExpressionCondition = new BinaryExpressionCondition(this._operator || OPERATOR.OR)
 
         for (const condition of this._conditions) {
             const modelCondition: ModelCondition = new ModelCondition();
@@ -51,6 +51,4 @@ export class IfElseCodeBlock extends CodeBlock {
 
         return binaryExpressionCondition;
     }
-
-
 }

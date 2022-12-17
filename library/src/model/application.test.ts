@@ -35,7 +35,6 @@ describe("Test the export of a block", () => {
         const state: StateModel = new StateModel("state1", [statement1, binaryExpression]);
         const switchStateStatement: SwitchStateStatement = new SwitchStateStatement(state);
         binaryExpression.addBlock(switchStateStatement, ConditionBlockDestination.IF);
-        // console.log(state.export())
 
         const state2: StateModel = new StateModel("state2", [statement2, binaryExpression]);
 

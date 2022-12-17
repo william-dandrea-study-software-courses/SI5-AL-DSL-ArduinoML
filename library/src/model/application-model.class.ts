@@ -79,7 +79,7 @@ export class ApplicationModel {
 
         result += `\nvoid loop() {`
 
-        result += `\n\t${this._initialState.name}()`;
+        result += `\n\t${this._initialState.name}();`;
 
         result += `\n}`
 

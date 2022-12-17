@@ -6,4 +6,5 @@ export enum OPERATOR {
   INFERIOR = "<",
   SUPERIOREQ = ">=",
   INFERIOREQ = "<=",
+  NONE = ""
 }
