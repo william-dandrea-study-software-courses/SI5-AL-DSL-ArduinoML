@@ -1,39 +1,27 @@
-int BUTTON = 9;
 int BUZZER = 13;
-int LED = 12;
+int BUTTON1 = 11;
+int BUTTON2 = 12;
 
 
 void setup() {
-	pinMode(BUTTON, INPUT);
 	pinMode(BUZZER, OUTPUT);
-	pinMode(LED, OUTPUT);
+	pinMode(BUTTON1, INPUT);
+	pinMode(BUTTON2, INPUT);
 }
 
-void state_UP() {
-	digitalWrite(LED, HIGH);
-	tone(BUZZER, 2000);
+void state_main() {
 
-	if (digitalRead(BUTTON) == HIGH) {
-		state_DOWN();
-
-	} else {
-		state_UP();
-
-	}
-}
-void state_DOWN() {
-	digitalWrite(LED, LOW);
-	noTone(BUZZER);
-
-	if (digitalRead(BUTTON) == HIGH) {
-		state_UP();
+	if (digitalRead(BUTTON1) == HIGH && digitalRead(BUTTON2) == HIGH) {
+		tone(BUZZER, 1000);
+		state_main();
 
 	} else {
-		state_DOWN();
+		noTone(BUZZER);
+		state_main();
 
 	}
 }
 
 void loop() {
-	state_DOWN();
+	state_main();
 }

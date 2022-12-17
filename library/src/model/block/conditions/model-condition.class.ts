@@ -17,11 +17,11 @@ export class ModelCondition extends Block {
   public addBlock(component: Block, blockDestination: ConditionBlockDestination): void {
     if (blockDestination === ConditionBlockDestination.IF) {
       this.childrenIf.push(component);
-      component.setParent(this);
+      // component.setParent(this);
     }
     if (blockDestination === ConditionBlockDestination.ELSE) {
       this.childrenElse.push(component);
-      component.setParent(this);
+      // component.setParent(this);
     }
 
   }
@@ -30,11 +30,11 @@ export class ModelCondition extends Block {
     if (blockDestination === ConditionBlockDestination.IF) {
       const componentIndex = this.childrenIf.indexOf(component);
       this.childrenIf.splice(componentIndex, 1);
-      component.setParent(null);
+      // component.setParent(null);
     } else {
       const componentIndex = this.childrenElse.indexOf(component);
       this.childrenElse.splice(componentIndex, 1);
-      component.setParent(null);
+      // component.setParent(null);
     }
   }
 
