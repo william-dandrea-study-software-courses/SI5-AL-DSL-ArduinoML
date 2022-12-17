@@ -7,8 +7,8 @@ import {ConditionBlockDestination, ModelCondition} from "../../../model/block/co
 
 export class IfElseCodeBlock extends CodeBlock {
 
-    private _ifCodeBlock: CodeBlock | null = null;
-    private _elseCodeBlock: CodeBlock | null = null;
+    private _ifCodeBlock: CodeBlock[] = [];
+    private _elseCodeBlock: CodeBlock[] = [];
 
     private _conditions: Condition[] = [];
     private _operator: OPERATOR | null = null;
@@ -17,12 +17,12 @@ export class IfElseCodeBlock extends CodeBlock {
         super();
     }
 
-    set ifCodeBlock(value: CodeBlock) {
-        this._ifCodeBlock = value;
+    public addIfCodeBlock(value: CodeBlock) {
+        this._ifCodeBlock.push(value);
     }
 
-    set elseCodeBlock(value: CodeBlock) {
-        this._elseCodeBlock = value;
+    public addElseCodeBlock(value: CodeBlock) {
+        this._elseCodeBlock.push(value);
     }
 
     public addConditions(value: Condition) {
@@ -41,13 +41,13 @@ export class IfElseCodeBlock extends CodeBlock {
             binaryExpressionCondition.addCondition(condition.condition);
         }
 
-        if (this._ifCodeBlock != null) {
-            binaryExpressionCondition.addBlock(this._ifCodeBlock.getContent(), ConditionBlockDestination.IF);
-        }
+        this._ifCodeBlock.forEach(cb => {
+            binaryExpressionCondition.addBlock(cb.getContent(), ConditionBlockDestination.IF);
+        })
 
-        if (this._elseCodeBlock != null) {
-            binaryExpressionCondition.addBlock(this._elseCodeBlock.getContent(), ConditionBlockDestination.ELSE);
-        }
+        this._elseCodeBlock.forEach(cb => {
+            binaryExpressionCondition.addBlock(cb.getContent(), ConditionBlockDestination.ELSE);
+        });
 
         return binaryExpressionCondition;
     }

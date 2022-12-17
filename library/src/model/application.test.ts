@@ -9,6 +9,9 @@ import {SIGNAL} from "./utils/signal.enum";
 import {OPERATOR} from "./utils/operator.enum";
 import {ApplicationModel} from "./application-model.class";
 import {ConditionBlockDestination} from "./block/conditions/model-condition.class";
+import {BuzzerActuator} from "./bricks/implementations/buzzer-actuator.class";
+import {BuzzerStartStatement} from "./block/statements/buzzer-start-statement.class";
+import {BuzzerStopStatement} from "./block/statements/buzzer-stop-statement.class";
 
 
 const expect = chai.expect;
@@ -41,6 +44,57 @@ describe("Test the export of a block", () => {
         const application: ApplicationModel = new ApplicationModel([button1, button2], [state, state2], state2);
         console.log(application.export());
     });
+
+    it("dual check alarm", () => {
+        const buzzer: BuzzerActuator = new BuzzerActuator("BUZZER", 13, 1000, null);
+        const button1: ButtonSensor = new ButtonSensor("BUTTON1", 11);
+        const button2: ButtonSensor = new ButtonSensor("BUTTON2", 12);
+
+        const binaryExpression: BinaryExpressionCondition = new BinaryExpressionCondition(OPERATOR.AND);
+        binaryExpression.addCondition(new DigitalAtomicCondition(button1, OPERATOR.EQUAL, SIGNAL.HIGH));
+        binaryExpression.addCondition(new DigitalAtomicCondition(button2, OPERATOR.EQUAL, SIGNAL.HIGH));
+
+        const mainState: StateModel = new StateModel("main", []);
+
+        binaryExpression.addBlock(new BuzzerStartStatement(buzzer, 1000, null), ConditionBlockDestination.IF)
+        binaryExpression.addBlock(new SwitchStateStatement(mainState), ConditionBlockDestination.IF)
+
+        binaryExpression.addBlock(new BuzzerStopStatement(buzzer), ConditionBlockDestination.ELSE)
+        binaryExpression.addBlock(new SwitchStateStatement(mainState), ConditionBlockDestination.ELSE)
+
+        mainState.addBlock(binaryExpression);
+        const application: ApplicationModel = new ApplicationModel([button1, button2, buzzer], [mainState], mainState);
+        console.log(application.export());
+
+
+        /*
+        const buzzer: Buzzer = new Buzzer("BUZZER", 13, 1000, null);
+        const button1: Button = new Button("BUTTON1", 11);
+        const button2: Button = new Button("BUTTON2", 12);
+
+        const mainState: State = new State("main");
+
+        const ifElseCodeBlock: IfElseCodeBlock = new IfElseCodeBlock();
+        ifElseCodeBlock.addConditions(button2.isPressed())
+        ifElseCodeBlock.addConditions(button1.isPressed())
+        ifElseCodeBlock.operator = OPERATOR.AND;
+
+        const codeBlock1: RegularCodeBlock = new RegularCodeBlock();
+        codeBlock1.addBlock(buzzer.soundUp());
+        codeBlock1.addBlock(mainState.callState());
+        ifElseCodeBlock.addIfCodeBlock(codeBlock1);
+
+        mainState.codeBlock.addBlock(ifElseCodeBlock);
+        const codeBlock2: RegularCodeBlock = new RegularCodeBlock();
+        codeBlock2.addBlock(buzzer.soundDown());
+        codeBlock2.addBlock(mainState.callState());
+        ifElseCodeBlock.addElseCodeBlock(codeBlock2);
+
+        mainState.codeBlock.addBlock(ifElseCodeBlock)
+        const app: Application = new Application([buzzer, button1, button2], [mainState], mainState)
+        console.log(app.export())
+         */
+    })
 
 
 

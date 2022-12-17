@@ -16,7 +16,15 @@ export class RegularCodeBlock extends CodeBlock {
     }
 
     getContent(): Block[] {
-        return this._codeBlock.map(c => c.getContent());
+        const blocks: Block[] = []
+
+        this._codeBlock.forEach(c => {
+            blocks.push(c.getContent());
+        })
+        // return this._codeBlock.map(c => c.getContent());
+        console.log("====================================================")
+        console.log(blocks)
+        return blocks;
     }
 
 

@@ -1,4 +1,5 @@
 import { Block } from "../block.class";
+import {RegularCodeBlock} from "../../../grammar/main/blocks/regular-code-block.class";
 
 export enum ConditionBlockDestination {
   IF,
@@ -44,14 +45,16 @@ export class ModelCondition extends Block {
 
   // domain related
   protected exportAll(cond: string): string {
+    // console.log(this.childrenIf)
+    // console.log(this.childrenElse)
 
     let result: string = '';
-    // result += `` + `\n`;
 
     result += `if (${cond}) {` + `\n`;
 
 
     this.childrenIf.forEach(child => {
+      // console.log(child)
       result += `\t${child.export()}` + `\n`;
     })
 
