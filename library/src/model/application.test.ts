@@ -11,7 +11,6 @@ import {OPERATOR} from "./utils/operator.enum";
 import {Application} from "./application.class";
 
 
-
 const expect = chai.expect;
 
 describe("Test the export of a block", () => {
