@@ -1,6 +1,6 @@
 import { Statement } from "./statement.class";
 
-export class Delay extends Statement {
+export class DelayStatement extends Statement {
   private readonly _delayInMs: number;
 
   constructor(delayInMs: number) {

@@ -1,6 +1,6 @@
 import { Block } from "../block.class";
 
-export abstract class Condition extends Block {
+export class Condition extends Block {
   // composition of block (first level of composition)
   protected children: Block[] = [];
 
@@ -8,12 +8,12 @@ export abstract class Condition extends Block {
   protected parent: Condition | null;
 
   // relative to block composition
-  public add(component: Block): void {
+  public addBlock(component: Block): void {
     this.children.push(component);
     component.setParent(this);
   }
 
-  public remove(component: Block): void {
+  public removeBlock(component: Block): void {
     const componentIndex = this.children.indexOf(component);
     this.children.splice(componentIndex, 1);
 
@@ -25,5 +25,24 @@ export abstract class Condition extends Block {
   }
 
   // domain related
-  public abstract export(): string;
+  protected exportAll(cond: string): string {
+
+    let result: string = '';
+    // result += `` + `\n`;
+
+    result += `if (${cond}) {` + `\n`;
+
+
+    this.children.forEach(child => {
+      result += `\t${child.export()}` + `\n`;
+    })
+    result += `}` + `\n`;
+
+
+    return result;
+  }
+
+  export(): string {
+    return "";
+  }
 }

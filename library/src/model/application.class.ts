@@ -1,4 +1,4 @@
-import {Brick} from "./bricks/brick.class";
+/*import {Brick} from "./bricks/brick.class";
 import {State} from "./states/state.class";
 import {Command} from "./commands/command.class";
 
@@ -86,3 +86,4 @@ export class Application {
         return result;
     }
 }
+*/

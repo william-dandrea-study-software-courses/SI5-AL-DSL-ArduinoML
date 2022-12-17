@@ -1,6 +1,6 @@
 import { Actuator } from "../actuator.class";
 
-export class Buzzer extends Actuator {
+export class BuzzerActuator extends Actuator {
   private readonly _frequency: number;
   private readonly _duration: number | null;
 

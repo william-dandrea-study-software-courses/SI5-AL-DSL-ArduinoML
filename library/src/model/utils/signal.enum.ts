@@ -1,4 +1,4 @@
 export enum SIGNAL {
-  LOW,
-  HIGH,
+  LOW="LOW",
+  HIGH="HIGH",
 }

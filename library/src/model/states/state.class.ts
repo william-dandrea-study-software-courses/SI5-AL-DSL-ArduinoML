@@ -1,5 +1,5 @@
 import { Block } from "../block/block.class";
-import { Command } from "../commands/command.class";
+import {Command} from "../../../dist";
 
 export class State {
   private readonly _name: string;

@@ -1,7 +1,7 @@
-import { State } from "../../states";
 import { Statement } from "./statement.class";
+import {State} from "../../states/state.class";
 
-export class SwitchState extends Statement {
+export class SwitchStateStatement extends Statement {
   protected readonly _nextState;
 
   protected constructor(nextState: State) {
