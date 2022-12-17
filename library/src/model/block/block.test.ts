@@ -7,7 +7,8 @@ import {DelayStatement} from "./statements/delay-statement.class";
 import {DigitalAssignmentStatement} from "./statements/digital-assignment-statement.class";
 import {ButtonSensor} from "../bricks/implementations/button-sensor.class";
 import {LedActuator} from "../bricks/implementations/led-actuator.class";
-import {ConditionBlockDestination} from "./conditions/condition.class";
+import {ConditionBlockDestination} from "./conditions/model-condition.class";
+
 
 const expect = chai.expect;
 

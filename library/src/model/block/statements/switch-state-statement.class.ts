@@ -1,10 +1,10 @@
 import { Statement } from "./statement.class";
-import {State} from "../../states/state.class";
+import {StateModel} from "../../states/state.class";
 
 export class SwitchStateStatement extends Statement {
   protected readonly _nextState;
 
-  constructor(nextState: State) {
+  constructor(nextState: StateModel) {
     super();
     this._nextState = nextState;
   }

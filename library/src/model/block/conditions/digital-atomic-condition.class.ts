@@ -1,9 +1,9 @@
 import { OPERATOR } from "../../utils/operator.enum";
 import { SIGNAL } from "../../utils/signal.enum";
-import { Condition } from "./condition.class";
 import {Sensor} from "../../bricks/sensor.class";
+import {ModelCondition} from "./model-condition.class";
 
-export class DigitalAtomicCondition extends Condition {
+export class DigitalAtomicCondition extends ModelCondition {
   protected readonly _input: Sensor;
   protected readonly _operator: OPERATOR;
   protected readonly _value: SIGNAL;

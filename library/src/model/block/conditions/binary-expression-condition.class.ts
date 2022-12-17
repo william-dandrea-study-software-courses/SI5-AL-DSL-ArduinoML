@@ -1,10 +1,10 @@
 import { OPERATOR } from "../../utils/operator.enum";
-import { Condition } from "./condition.class";
 import {DigitalAtomicCondition} from "./digital-atomic-condition.class";
+import {ModelCondition} from "./model-condition.class";
 
-export class BinaryExpressionCondition extends Condition {
+export class BinaryExpressionCondition extends ModelCondition {
   // composition of condition (second level of composition)
-  protected childrenConditions: Condition[] = [];
+  protected childrenConditions: ModelCondition[] = [];
 
   // domain relative
   protected readonly _operator: OPERATOR;
@@ -14,12 +14,12 @@ export class BinaryExpressionCondition extends Condition {
     this._operator = operator;
   }
 
-  public addCondition(component: Condition): void {
+  public addCondition(component: ModelCondition): void {
     this.childrenConditions.push(component);
     component.setParent(this);
   }
 
-  public removeCondition(component: Condition): void {
+  public removeCondition(component: ModelCondition): void {
     const componentIndex = this.childrenConditions.indexOf(component);
     this.childrenConditions.splice(componentIndex, 1);
 
@@ -34,7 +34,7 @@ export class BinaryExpressionCondition extends Condition {
     let result: string = '';
     for (let i = 0; i < this.childrenConditions.length; i++) {
 
-      const condition: Condition = this.childrenConditions[i];
+      const condition: ModelCondition = this.childrenConditions[i];
       if (condition instanceof DigitalAtomicCondition) {
         result += `${condition.exportCondition()}`;
       }

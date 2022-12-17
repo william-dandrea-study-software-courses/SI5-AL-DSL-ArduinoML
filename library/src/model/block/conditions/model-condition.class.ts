@@ -5,13 +5,13 @@ export enum ConditionBlockDestination {
   ELSE
 }
 
-export class Condition extends Block {
+export class ModelCondition extends Block {
   // composition of block (first level of composition)
   protected childrenIf: Block[] = [];
   protected childrenElse: Block[] = [];
 
   // composition of conditions (second level of composition)
-  protected parent: Condition | null;
+  protected parent: ModelCondition | null;
 
   // relative to block composition
   public addBlock(component: Block, blockDestination: ConditionBlockDestination): void {

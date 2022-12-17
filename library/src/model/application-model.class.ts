@@ -1,15 +1,15 @@
 import {Brick} from "./bricks/brick.class";
-import {State} from "./states/state.class";
+import {StateModel} from "./states/state.class";
 
 
-export class Application {
+export class ApplicationModel {
 
     private readonly _bricks: Brick[];
-    private readonly _states: State[];
-    private readonly _initialState: State;
+    private readonly _states: StateModel[];
+    private readonly _initialState: StateModel;
 
 
-    constructor(bricks: Brick[], states: State[], initialState: State) {
+    constructor(bricks: Brick[], states: StateModel[], initialState: StateModel) {
         this._bricks = bricks;
         this._states = states;
         this._initialState = initialState;

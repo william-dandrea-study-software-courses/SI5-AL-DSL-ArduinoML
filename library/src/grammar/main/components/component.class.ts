@@ -1,9 +1,9 @@
-
+import {Brick} from "../../../model/bricks/brick.class";
 
 
 export abstract class Component {
     protected readonly _name: string;
-    private readonly _pin: number;
+    protected readonly _pin: number;
 
     protected constructor(name: string, pin: number) {
         this._name = name;
@@ -11,5 +11,5 @@ export abstract class Component {
     }
 
 
-    // public abstract getContent() {}
+    public abstract getContent(): Brick;
 }

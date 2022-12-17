@@ -1,10 +1,10 @@
 import { Block } from "../block/block.class";
 
-export class State {
+export class StateModel {
   private readonly _name: string;
-  private readonly _block: Block;
+  private readonly _block: Block[];
 
-  constructor(name: string, block: Block) {
+  constructor(name: string, block: Block[]) {
     this._name = name;
     this._block = block;
   }
@@ -18,7 +18,10 @@ export class State {
 
     result += `void state_${this._name}() {` + `\n`;
 
-    result += this._block.export().replace(/^/gm, "\t");
+    this._block.forEach(b => {
+      result += b.export().replace(/^/gm, "\t") + `\n`;
+    })
+
 
     result += `\n}`;
     return result;
