@@ -9,6 +9,6 @@ export abstract class Sensor extends Brick {
   }
 
   setup(): string {
-    return `\tpinMode(${this._name}, INPUT);`;
+    return `pinMode(${this._name}, INPUT);`;
   }
 }

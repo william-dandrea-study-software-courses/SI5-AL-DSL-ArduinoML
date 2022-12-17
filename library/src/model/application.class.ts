@@ -1,19 +1,19 @@
-/*import {Brick} from "./bricks/brick.class";
+import {Brick} from "./bricks/brick.class";
 import {State} from "./states/state.class";
-import {Command} from "./commands/command.class";
 
 
 export class Application {
 
     private readonly _bricks: Brick[];
     private readonly _states: State[];
-    private readonly _loopCommands: Command[];
+    private readonly _initialState: State;
 
 
-    constructor(bricks: Brick[], states: State[], loopCommands: Command[]) {
+    constructor(bricks: Brick[], states: State[], initialState: State) {
         this._bricks = bricks;
         this._states = states;
-        this._loopCommands = loopCommands;
+        this._initialState = initialState;
+
 
         this._checkIfApplicationIsCorrect();
     }
@@ -78,12 +78,11 @@ export class Application {
         let result: string = `\n`;
 
         result += `\nvoid loop() {`
-        this._loopCommands.forEach(command => {
-            result += `\n\t${command.export()}`;
-        });
+
+        result += `\n\t${this._initialState.name}()`;
+
         result += `\n}`
 
         return result;
     }
 }
-*/

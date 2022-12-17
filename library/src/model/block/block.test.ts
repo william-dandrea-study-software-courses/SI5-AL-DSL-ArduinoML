@@ -7,8 +7,7 @@ import {DelayStatement} from "./statements/delay-statement.class";
 import {DigitalAssignmentStatement} from "./statements/digital-assignment-statement.class";
 import {ButtonSensor} from "../bricks/implementations/button-sensor.class";
 import {LedActuator} from "../bricks/implementations/led-actuator.class";
-import {SwitchStateStatement} from "./statements/switch-state-statement.class";
-import {Condition} from "./conditions/condition.class";
+import {ConditionBlockDestination} from "./conditions/condition.class";
 
 const expect = chai.expect;
 
@@ -27,7 +26,9 @@ describe("Test the export of a block", () => {
         binaryExpression.addCondition(digitalCondition2);
 
         const statement1: DelayStatement = new DelayStatement(500);
-        binaryExpression.addBlock(statement1);
+        const statement2: DelayStatement = new DelayStatement(200);
+        binaryExpression.addBlock(statement1, ConditionBlockDestination.IF);
+        binaryExpression.addBlock(statement2, ConditionBlockDestination.ELSE);
 
         console.log(binaryExpression.export())
         // expect(binaryExpression.export()).to.equal("digitalRead(BUTTON1) == HIGH && digitalRead(BUTTON2) == HIGH")
@@ -51,8 +52,8 @@ describe("Test the export of a block", () => {
         const button1: ButtonSensor = new ButtonSensor("BUTTON1", 12);
 
         const digitalCondition: DigitalAtomicCondition = new DigitalAtomicCondition(button1, OPERATOR.EQUAL, SIGNAL.HIGH);
-        digitalCondition.addBlock(statement1);
-        digitalCondition.addBlock(statement2);
+        digitalCondition.addBlock(statement1, ConditionBlockDestination.IF);
+        digitalCondition.addBlock(statement2, ConditionBlockDestination.IF);
 
         console.log(digitalCondition.export());
     })

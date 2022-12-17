@@ -1,20 +1,16 @@
 import { Block } from "../block/block.class";
-import {Command} from "../../../dist";
 
 export class State {
   private readonly _name: string;
-  private _blocs: Block[] = [];
+  private readonly _block: Block;
 
-  constructor(name: string) {
+  constructor(name: string, block: Block) {
     this._name = name;
+    this._block = block;
   }
 
-  public addBlock(block: Block): void {
-    this._blocs.push(block);
-  }
-
-  public callState(): Command {
-    return new Command(`state_${this._name}();`);
+  get name(): string {
+    return `state_${this._name}`;
   }
 
   export(): string {
@@ -22,10 +18,7 @@ export class State {
 
     result += `void state_${this._name}() {` + `\n`;
 
-    this._blocs.forEach((block) => {
-      result += block.export().replace(/^/gm, "\t");
-      // result += block.export().replace(/^/gm, '\t');
-    });
+    result += this._block.export().replace(/^/gm, "\t");
 
     result += `\n}`;
     return result;

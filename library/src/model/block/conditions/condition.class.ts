@@ -1,23 +1,41 @@
 import { Block } from "../block.class";
 
+export enum ConditionBlockDestination {
+  IF,
+  ELSE
+}
+
 export class Condition extends Block {
   // composition of block (first level of composition)
-  protected children: Block[] = [];
+  protected childrenIf: Block[] = [];
+  protected childrenElse: Block[] = [];
 
   // composition of conditions (second level of composition)
   protected parent: Condition | null;
 
   // relative to block composition
-  public addBlock(component: Block): void {
-    this.children.push(component);
-    component.setParent(this);
+  public addBlock(component: Block, blockDestination: ConditionBlockDestination): void {
+    if (blockDestination === ConditionBlockDestination.IF) {
+      this.childrenIf.push(component);
+      component.setParent(this);
+    }
+    if (blockDestination === ConditionBlockDestination.ELSE) {
+      this.childrenElse.push(component);
+      component.setParent(this);
+    }
+
   }
 
-  public removeBlock(component: Block): void {
-    const componentIndex = this.children.indexOf(component);
-    this.children.splice(componentIndex, 1);
-
-    component.setParent(null);
+  public removeBlock(component: Block, blockDestination: ConditionBlockDestination): void {
+    if (blockDestination === ConditionBlockDestination.IF) {
+      const componentIndex = this.childrenIf.indexOf(component);
+      this.childrenIf.splice(componentIndex, 1);
+      component.setParent(null);
+    } else {
+      const componentIndex = this.childrenElse.indexOf(component);
+      this.childrenElse.splice(componentIndex, 1);
+      component.setParent(null);
+    }
   }
 
   public isComposite(): boolean {
@@ -33,11 +51,21 @@ export class Condition extends Block {
     result += `if (${cond}) {` + `\n`;
 
 
-    this.children.forEach(child => {
+    this.childrenIf.forEach(child => {
       result += `\t${child.export()}` + `\n`;
     })
-    result += `}` + `\n`;
 
+    if (this.childrenElse.length > 0) {
+      result += `} else {` + `\n`;
+
+      this.childrenElse.forEach(child => {
+        result += `\t${child.export()}` + `\n`;
+      })
+
+      result += `}` + `\n`;
+    } else {
+      result += `}` + `\n`;
+    }
 
     return result;
   }

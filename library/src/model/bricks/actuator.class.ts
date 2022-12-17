@@ -9,6 +9,6 @@ export abstract class Actuator extends Brick {
   }
 
   setup(): string {
-    return `\tpinMode(${this._name}, OUTPUT);`;
+    return `pinMode(${this._name}, OUTPUT);`;
   }
 }
